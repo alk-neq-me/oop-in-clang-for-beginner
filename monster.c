@@ -5,8 +5,8 @@ typedef struct {
   char* power;
 } Walable;
 
-void walk(Walable* monster) {
-  printf("walking...\n");
+void walk(const Walable* monster, const char* name) {
+  printf("%s is walking...\n", name);
 }
 
 
@@ -14,44 +14,55 @@ typedef struct {
   char* power;
 } Swimable;
 
-void swim(Swimable* monster) {
-  printf("swamming...\n");
+void swim(const Swimable* monster, const char* name) {
+  printf("%s is swamming...\n", name);
 }
 
 
 typedef struct {
   char* name;
-  Walable* walkable;
  } Monster;
 
-void attack_pig(Monster* monster) {
-  walk(monster->walkable);
-  printf("%s attack with %s\n", monster->name, monster->walkable->power);
+void attack(const Monster* monster) {
+  printf("%s attack\n", monster->name);
+}
+
+char* get_name(const Monster* monster) {
+  return monster->name;
 }
 
 
 typedef struct {
-  char* name;
-  Swimable* swamable;
-  Walable* walkable;
-} LandAndSeaMonster;
+  Monster monster;
+  Walable walkable;
+} LandMonster;
 
-void attack_crab(LandAndSeaMonster* monster) {
-  swim(monster->swamable);
-  printf("%s attack with %s and swim %s\n", monster->name, monster->walkable->power, monster->swamable->power);
-}
+
+typedef struct {
+  Monster monster;
+  Swimable swamable;
+  Walable walkable;
+} LandAndSeaMonster;
 
 
 int main(const int argc, const char *argv[]) {
-  Walable pig_walk = { "hummer" };
-  Monster pig = {"pig", &pig_walk};
+  LandMonster bear = { 
+    { "Beast" },
+    { "Strong" }
+  };
 
-  Walable crab_walk = { "knife" };
-  Swimable crab_swam = { "fast" };
-  LandAndSeaMonster crab = { "ninja-crab", &crab_swam, &crab_walk };
+  LandAndSeaMonster crab = { 
+    { "Ninja" }, 
+    { "Knife" },
+    { "Super fast" }, 
+  };
 
-  attack_pig(&pig);
-  attack_crab(&crab);
+  walk(&bear.walkable, get_name(&bear.monster));
+  attack(&bear.monster);
+
+  walk(&crab.walkable, get_name(&crab.monster));
+  swim(&crab.swamable, get_name(&crab.monster));
+  attack(&crab.monster);
 
   return 1;
 }
