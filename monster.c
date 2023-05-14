@@ -22,9 +22,9 @@ void swim(Swimable* monster) {
 typedef struct {
   char* name;
   Walable* walkable;
- } PigMonster;
+ } Monster;
 
-void attack_pig(PigMonster* monster) {
+void attack_pig(Monster* monster) {
   walk(monster->walkable);
   printf("%s attack with %s\n", monster->name, monster->walkable->power);
 }
@@ -34,9 +34,9 @@ typedef struct {
   char* name;
   Swimable* swamable;
   Walable* walkable;
-} Crab;
+} LandAndSeaMonster;
 
-void attack_crab(Crab* monster) {
+void attack_crab(LandAndSeaMonster* monster) {
   swim(monster->swamable);
   printf("%s attack with %s and swim %s\n", monster->name, monster->walkable->power, monster->swamable->power);
 }
@@ -44,11 +44,11 @@ void attack_crab(Crab* monster) {
 
 int main(const int argc, const char *argv[]) {
   Walable pig_walk = { "hummer" };
-  PigMonster pig = {"pig", &pig_walk};
+  Monster pig = {"pig", &pig_walk};
 
   Walable crab_walk = { "knife" };
   Swimable crab_swam = { "fast" };
-  Crab crab = { "ninja-crab", &crab_swam, &crab_walk };
+  LandAndSeaMonster crab = { "ninja-crab", &crab_swam, &crab_walk };
 
   attack_pig(&pig);
   attack_crab(&crab);
