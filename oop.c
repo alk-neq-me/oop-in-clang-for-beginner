@@ -25,6 +25,7 @@ typedef struct {
  } PigMonster;
 
 void attack_pig(PigMonster* monster) {
+  walk(monster->walkable);
   printf("%s attack with %s\n", monster->name, monster->walkable->power);
 }
 
@@ -36,7 +37,8 @@ typedef struct {
 } Crab;
 
 void attack_crab(Crab* monster) {
-  printf("%s attack with %s in %s\n", monster->name, monster->walkable->power, monster->swamable->power);
+  swim(monster->swamable);
+  printf("%s attack with %s and swim %s\n", monster->name, monster->walkable->power, monster->swamable->power);
 }
 
 
